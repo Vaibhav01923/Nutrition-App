@@ -15,6 +15,7 @@ import analyticsRoutes from "./routes/analytics.route.js";
 import { startSchedulers } from "./jobs/queue.js";
 import { apiLimiter } from "./middleware/rateLimit.middleware.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
+import { recalcForLastWeek } from "./jobs/weeklyRecalc.job.js";
 
 const app = express();
 
@@ -42,12 +43,49 @@ app.get("/healthz", (req, res) => {
   });
 });
 
+// Cron webhook (Vercel Cron)
+app.post("/internal/recalc-weekly", async (req, res, next) => {
+  try {
+    const headerSecret = req.headers["x-cron-secret"]; // local/manual
+    const querySecret = req.query.secret; // fallback for hosted cron
+    const isVercelCron = !!req.headers["x-vercel-cron"]; // vercel cron header
+    if (
+      !(
+        isVercelCron ||
+        headerSecret === ENV.CRON_SECRET ||
+        querySecret === ENV.CRON_SECRET
+      )
+    ) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    await recalcForLastWeek();
+    return res.status(200).json({ ok: true });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 // 404 and error handlers
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(ENV.PORT, () => {
-  console.log("Server is running on port: ", ENV.PORT);
-  connectDB();
-  startSchedulers();
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    if (ENV.NODE_ENV !== "production") {
+      startSchedulers();
+    }
+    if (ENV.NODE_ENV !== "production") {
+      app.listen(ENV.PORT, () => {
+        console.log("Server is running on port: ", ENV.PORT);
+      });
+    }
+  } catch (error) {
+    console.log("Error starting server: ", error);
+    process.exit(1);
+  }
+};
+
+startServer();
+
+export default app;
