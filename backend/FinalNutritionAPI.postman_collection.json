@@ -1,0 +1,292 @@
+{
+  "info": {
+    "name": "FinalNutrition API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Healthcheck",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/healthz"
+      }
+    },
+    {
+      "name": "Auth - Sync",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/auth/sync",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"age\": 25,\n  \"sex\": \"male\",\n  \"height\": 180,\n  \"currentWeight\": 75,\n  \"targetWeight\": 70,\n  \"activityLevel\": \"moderate\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Auth - Me",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/auth/me"
+      }
+    },
+    {
+      "name": "User - Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/users/me"
+      }
+    },
+    {
+      "name": "User - Update Profile",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/users/me",
+        "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\"\n}" }
+      }
+    },
+    {
+      "name": "Food - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/food",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "food"]
+        }
+      }
+    },
+    {
+      "name": "Food - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/food",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2025-09-01\",\n  \"time\": \"13:05\",\n  \"name\": \"Chicken Bowl\",\n  \"calories\": 650\n}"
+        }
+      }
+    },
+    {
+      "name": "Food - Get By Id",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/food/{{foodId}}"
+      }
+    },
+    {
+      "name": "Food - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/food/{{foodId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2025-09-01\",\n  \"time\": \"13:10\",\n  \"name\": \"Chicken Bowl\",\n  \"calories\": 640\n}"
+        }
+      }
+    },
+    {
+      "name": "Food - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/food/{{foodId}}"
+      }
+    },
+    {
+      "name": "Favorites - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/food/favorites"
+      }
+    },
+    {
+      "name": "Favorites - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/food/favorites",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Chicken Bowl\",\n  \"calories\": 650\n}"
+        }
+      }
+    },
+    {
+      "name": "Favorites - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/food/favorites/{{favoriteId}}"
+      }
+    },
+    {
+      "name": "Goals - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/goals"
+      }
+    },
+    {
+      "name": "Goals - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/goals",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mode\": \"lose\",\n  \"weeklyChangeKg\": -0.5,\n  \"startDate\": \"2025-09-01\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Goals - Get By Id",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/goals/{{goalId}}"
+      }
+    },
+    {
+      "name": "Goals - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/goals/{{goalId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"targetDailyCalories\": 2200\n}"
+        }
+      }
+    },
+    {
+      "name": "Goals - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/goals/{{goalId}}"
+      }
+    },
+    {
+      "name": "Weight - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/weight"
+      }
+    },
+    {
+      "name": "Weight - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/weight",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2025-09-01\",\n  \"weightKg\": 74.8\n}"
+        }
+      }
+    },
+    {
+      "name": "Weight - Get By Id",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/weight/{{weightId}}"
+      }
+    },
+    {
+      "name": "Weight - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/api/weight/{{weightId}}",
+        "body": { "mode": "raw", "raw": "{\n  \"note\": \"PM\"\n}" }
+      }
+    },
+    {
+      "name": "Weight - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/weight/{{weightId}}"
+      }
+    },
+    {
+      "name": "Analytics - Today",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/analytics/today"
+      }
+    },
+    {
+      "name": "Analytics - Week",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/analytics/week"
+      }
+    },
+    {
+      "name": "Analytics - Macros",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/analytics/macros"
+      }
+    },
+    {
+      "name": "Analytics - Weight",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/analytics/weight?range=1m"
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "foodId", "value": "" },
+    { "key": "favoriteId", "value": "" },
+    { "key": "goalId", "value": "" },
+    { "key": "weightId", "value": "" }
+  ]
+}
